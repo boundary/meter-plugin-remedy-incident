@@ -12,7 +12,7 @@ public class RemedyPluginConfigurationItem {
     private Integer port;
     private String userName;
     private String password;
-    private int pollInterval;
+    private Long pollInterval;
     private String requestType;
     private String fields[];
 
@@ -63,7 +63,7 @@ public class RemedyPluginConfigurationItem {
         this.password = password;
     }
 
-    public int getPollInterval() {
+    public Long getPollInterval() {
         return pollInterval;
     }
 
@@ -74,7 +74,7 @@ public class RemedyPluginConfigurationItem {
                 + ", fileds=" + Arrays.toString(fields) + "}";
     }
 
-    public void setPollInterval(int pollInterval) {
+    public void setPollInterval(Long pollInterval) {
         this.pollInterval = pollInterval;
     }
 }

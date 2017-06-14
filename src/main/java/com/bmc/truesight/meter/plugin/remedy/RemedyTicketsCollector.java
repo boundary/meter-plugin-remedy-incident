@@ -39,7 +39,7 @@ public class RemedyTicketsCollector implements Collector {
     public RemedyTicketsCollector(RemedyPluginConfigurationItem config, Template template, ARServerForm arServerForm) {
         this.config = config;
         this.template = template;
-        template = Util.updateConfiguration(template, config);
+        Util.updateConfiguration(this.template, config);
         this.arServerForm = arServerForm;
     }
 
@@ -50,30 +50,25 @@ public class RemedyTicketsCollector implements Collector {
 
     @Override
     public void run() {
-        //System.err.println("Collector running ");
         EventSinkAPI eventSinkAPI = new EventSinkAPI();
         EventSinkStandardOutput eventSinkAPIstd = new EventSinkStandardOutput();
-
         while (true) {
             try {
                 RemedyReader reader = new GenericRemedyReader();
                 ARServerUser arServerContext = reader.createARServerContext(config.getHostName(), config.getPort(), config.getUserName(), config.getPassword());
-                Calendar cal = null;
                 try {
                     reader.login(arServerContext);
-                    int chunkSize = Constants.REMEDY_CHUNK_SIZE;
+                    int chunkSize = template.getConfig().getChunkSize();
                     int startFrom = 0;
                     int iteration = 1;
                     OutputInteger nMatches = new OutputInteger();
                     boolean readNext = true;
-                    cal = Calendar.getInstance();
-                    cal.add(Calendar.MINUTE, (0 - config.getPollInterval()));
-                    template.getConfig().setStartDateTime(cal.getTime());
-                    template.getConfig().setEndDateTime(new Date());
+                    Long currentMili = Calendar.getInstance().getTimeInMillis();
+                    Long pastMili = currentMili - (config.getPollInterval() * 60 * 1000);
+                    template.getConfig().setStartDateTime(new Date(pastMili));
+                    template.getConfig().setEndDateTime(new Date(currentMili));
                     while (readNext) {
-                        //System.err.println("before reading from remedy ");
                         List<TSIEvent> eventList = reader.readRemedyTickets(arServerContext, arServerForm, template, startFrom, chunkSize, nMatches, remedyEntryEventAdapter);
-                        System.err.println("remedy events got {}" + eventList.size());
                         if (eventList.size() > 0) {
                             eventList.forEach(event -> {
                                 Gson gson = new Gson();
@@ -82,8 +77,9 @@ public class RemedyTicketsCollector implements Collector {
                                 sendEventToTSI.append(Constants.REMEDY_PROXY_EVENT_JSON_START_STRING).append(eventJson).append(Constants.REMEDY_PROXY_EVENT_JSON_END_STRING);
                                 eventSinkAPI.emit(sendEventToTSI.toString());
                             });
+                            System.err.println(eventList.size() + " Events successfuly ingested for DateTime:" + template.getConfig().getStartDateTime() + " to DateTime:" + template.getConfig().getEndDateTime());
                         } else {
-                            System.err.println("No remedy Data available");
+                            System.err.println(eventList.size() + " Events found for the interval, DateTime:" + template.getConfig().getStartDateTime() + " to DateTime:" + template.getConfig().getEndDateTime());
                             eventSinkAPIstd.emit(Util.eventMeterTSI(Constants.REMEDY_PLUGIN_TITLE_MSG, Constants.REMEDY_IM_NO_DATA_AVAILABLE, Event.EventSeverity.INFO.toString()));
                         }
                         if (nMatches.longValue() <= (startFrom + chunkSize)) {
@@ -99,7 +95,7 @@ public class RemedyTicketsCollector implements Collector {
                 } finally {
                     reader.logout(arServerContext);
                 }
-                Thread.sleep(config.getPollInterval());
+                Thread.sleep((config.getPollInterval() * 60 * 1000));
             } catch (InterruptedException ex) {
                 eventSinkAPIstd.emit(Util.eventMeterTSI(Constants.REMEDY_PLUGIN_TITLE_MSG, ex.getMessage(), Event.EventSeverity.ERROR.toString()));
             }

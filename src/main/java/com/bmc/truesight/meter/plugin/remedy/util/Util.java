@@ -28,8 +28,8 @@ public class Util {
             .getLogger(Util.class);
 
     public static String getFieldValues(String fieldValue[]) {
-        StringBuilder fieldValues = new StringBuilder();
-        if (fieldValues != null && fieldValue.length > 1) {
+        StringBuffer fieldValues = new StringBuffer();
+        if (fieldValue != null && fieldValue.length > 1) {
             for (String val : fieldValue) {
                 fieldValues.append(val);
             }
@@ -77,14 +77,11 @@ public class Util {
 
     public static Template updateConfiguration(Template template, RemedyPluginConfigurationItem config) {
         Configuration configuration = template.getConfig();
-        configuration.setChunkSize(Constants.REMEDY_CHUNK_SIZE);
         configuration.setRemedyHostName(config.getHostName());
         configuration.setRemedyPort(config.getPort());
         configuration.setRemedyUserName(config.getUserName());
         configuration.setRemedyPassword(config.getPassword());
-        configuration.setRetryConfig(Constants.REMEDY_RETRY_CONFIG);
-        configuration.setWaitMsBeforeRetry(Constants.REMEDY_WAIT_MS_BEFORE_NEXT_RETRY);
-        template.setConfig(configuration);
+        //template.setConfig(configuration);
         return template;
     }
 }
