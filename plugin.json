@@ -1,0 +1,89 @@
+{
+  "name": "BMC Remedy Incident Ingestion Plugin",
+  "version": "0.9.0",
+  "meterVersionRequired": "4.6.2-839",
+  "unsupportedPlatforms": [],
+  "tags": "Remedy",
+  "description": "Ingests Incident tickets from BMC Remedy",
+  "command_lua": "",
+  "postExtract_lua": "",
+  "command": "java -jar target/meter-plugin-remedy-incident-0.9.0-full.jar",
+  "postExtract": "",
+  "ignore": "",
+  "icon": "icon.png",
+  "metrics": [
+  "DUMMAY METRICS"
+  ],
+  "dashboards": [
+  ],
+  "paramArray": {
+    "itemTitle": [
+      "hostName"
+    ],
+    "schemaTitle": "Remedy Instance"
+  },
+  "paramSchema": [
+    {
+      "title": "AR Host Name",
+      "name": "hostName",
+      "description": "The host of BMC Remedy server",
+      "type": "string",
+      "default": "127.0.0.1",
+      "required": true
+    },
+    {
+      "title": "Port",
+      "name": "port",
+      "description": "The port of BMC Remedy server",
+      "type": "integer",
+      "default": 0,
+      "required": false
+    },
+    {
+      "title": "User Name",
+      "name": "userName",
+      "description": "The user of BMC Remedy server",
+      "type": "string",
+      "default": "",
+      "required": false
+    },
+    {
+      "title": "Password",
+      "name": "password",
+      "description": "The password of BMC Remedy server",
+      "default": "",
+      "type": "password",
+      "required": false
+    },
+	{
+      "title": "Remedy Field Mapping",
+      "name": "fields",
+      "description": "Remedy TSI Fields Mapping Configuration",
+      "type": "array",
+      "items": {
+	  "type": "string"
+      },
+      "default": [ "{",
+        "\t\"eventDefinition\": {",
+        "\t\t\"properties\": {",
+        "\t\t\t\"Assignee\": \"@ASSIGNEE\",",
+        "\t\t\t\"IncidentNumber\": \"@INCIDENT_NUMBER\",",
+        "\t\t\t\"CI\": \"@CI\",",
+        "\t\t\t\"Priority\": \"@PRIORITY\",",
+        "\t\t\t\"PriorityWeight\": \"@WEIGHT\",",
+        "\t\t\t\"app_id\": \"Remedy DEMO 12\"",
+        "\t\t}",
+        "\t\t}",
+        "}"],
+      	"required": true
+    },
+    {
+      "title": "Poll Interval (min)",
+      "name": "pollInterval",
+      "description": "How often (in Min) to poll for events.",
+      "type": "integer",
+      "default": 15,
+      "required": true
+    }
+  ]
+}
