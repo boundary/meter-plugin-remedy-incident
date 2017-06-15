@@ -1,8 +1,7 @@
-TrueSight Pulse Remedy Integration Plugin
+TrueSight Pulse Remedy Incident Integration Plugin
 =========================================
 
-Collects tickets(Incident management and change management) from Remedy servers and collected tickets are sending to Truesight Intelligence. 
-The plugin allows multiple Remedy inctances data to be collectedd each of those to set their own Poll interval.
+Collects tickets(Incident management) from Remedy servers and collected tickets are ingested to Truesight Intelligence. The plugin allows multiple Remedy incidents data to be ingested periodically based on poll interval.
 
 ### Prerequisites
 
@@ -17,7 +16,8 @@ The plugin allows multiple Remedy inctances data to be collectedd each of those 
 |  Runtime | node.js | Python | Java |
 |:---------|:-------:|:------:|:----:|
 | Required |         |        |    v*  |
-\* java 1.8+ 
+
+* java 1.8+ 
 
 * [How to install java?](https://www3.ntu.edu.sg/home/ehchua/programming/howto/JDK_Howto.html)
 
@@ -36,15 +36,12 @@ The plugin allows multiple Remedy inctances data to be collectedd each of those 
 |Username          |The user of Remedy server                                            		   |
 |Password          |The password of Remedy server                                        		   |
 |Poll Interval     |How often (in milliseconds) to poll for collect the tickets                    |
-|Request Type      |Type of tickets to be collected(IM or CM)                                      |
 |Remedy Fields     |Type of fields will be collected(more info please check in template section)   |
 
-
-
 ### Templates
-Need to add information.
+TODO: Need to add information.
 
 ### References
 
-Need to add remedy docs here.
+TODO: Need to add documentation link here.
 
