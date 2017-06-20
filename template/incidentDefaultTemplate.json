@@ -1,12 +1,15 @@
 {
 	"config": {
-		"conditionFields":[1000000564,3,6],
-		"statusCondition":[3]
+		"chunkSize":1000,
+  		"conditionFields":[1000000564,3,6],
+  		"queryStatusList":[0,5],
+  		"retryConfig":3,
+  		"waitMsBeforeRetry":5000
 	},
-	"payload": {
-		"title": "@TITLE",
+	"eventDefinition": {
+		"title": "@SUMMARY",
 		"fingerprintFields": [
-			"IncidentNumber"
+			"IncidentNumber","createdAt"
 		],
 		"severity": "@SEVERITY",
 		"status": "@STATUS",
@@ -16,7 +19,14 @@
 			"CI": "@CI",
 			"Priority": "@PRIORITY",
 			"PriorityWeight": "@WEIGHT",
-			"app_id": "Remedy DEMO 12"
+			"Company":"@COMPANY",
+			"Customer":"@CUSTOMER",
+			"Summary":"@SUMMARY",
+			"Service":"@SERVICE",
+			"Impact":"@IMPACT",
+			"IncidentType":"@INCIDENT_TYPE",
+			"AssignedGroup":"@ASSIGNED_GROUP", 
+			"app_id": "Remedy TSI Integration"
 		},
 		"createdAt": "@CREATED_AT",
 		"eventClass": "Incident",
@@ -63,9 +73,14 @@
 	},
 	"@INCIDENT_NUMBER":{"fieldId":1000000161},
 	"@WEIGHT":{"fieldId":1000000169},
-	"@TITLE":{"fieldId":1000000000},
+	"@SUMMARY":{"fieldId":1000000000},
 	"@ASSIGNEE":{"fieldId":1000000218},
 	"@CI":{"fieldId":303544200},
-	"@CREATED_AT":{"fieldId":6}
-	
+	"@CREATED_AT":{"fieldId":1000000564},
+	"@COMPANY":{"fieldId":1000000082},
+	"@CUSTOMER":{"fieldId":303530000},
+	"@SERVICE":{"fieldId":303497300},
+	"@IMPACT":{"fieldId":1000000163},
+	"@INCIDENT_TYPE":{"fieldId":1000000099},
+	"@ASSIGNED_GROUP":{"fieldId":1000000217}
 }
