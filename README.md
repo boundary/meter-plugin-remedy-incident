@@ -39,7 +39,7 @@ Collects tickets(Incident management) from Remedy servers and collected tickets 
 |Remedy Fields     |Type of fields will be collected(more info please check in template section)   |
 
 ### Templates
-TODO: Need to add information.
+[Incident Default Template](https://github.com/boundary/meter-plugin-remedy-incident/blob/master/template/incidentDefaultTemplate.json)
 
 ### References
 
